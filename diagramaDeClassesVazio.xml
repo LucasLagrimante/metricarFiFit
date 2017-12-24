@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.1" xmlns:uml="http://schema.omg.org/spec/UML/2.0" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1">
+	<xmi:Documentation exporter="StarUML" exporterVersion="2.0"/>
+	<uml:Model xmi:id="AAAAAAFgilgq6YJzeMw=" xmi:type="uml:Model" name="RootModel">
+		<packagedElement xmi:id="AAAAAAFF+qBWK6M3Z8Y=" name="Modelo" visibility="public" xmi:type="uml:Model">
+			<packagedElement xmi:id="AAAAAAFgifJ5vketP30=" name="Gerente" visibility="public" isAbstract="false" isFinalSpecialization="false" isLeaf="false" xmi:type="uml:Class" isActive="false">
+				<ownedMember xmi:id="AAAAAAFgigbwjk4KvS4=" visibility="public" xmi:type="uml:Association" isDerived="false">
+					<ownedEnd xmi:id="AAAAAAFgigbwj04LlgU=" visibility="public" isStatic="false" isLeaf="false" isReadOnly="false" isOrdered="false" isUnique="false" xmi:type="uml:Property" aggregation="none" isDerived="false" isID="false" type="AAAAAAFgifJ5vketP30=">
+						<lowerValue xmi:id="AAAAAAFgilgq7oJ0h9g=" xmi:type="uml:LiteralInteger" value="1"/>
+						<upperValue xmi:id="AAAAAAFgilgq7oJ1goY=" xmi:type="uml:LiteralInteger" value="1"/>
+					</ownedEnd>
+					<ownedEnd xmi:id="AAAAAAFgigbwj04Mb6Q=" visibility="public" isStatic="false" isLeaf="false" isReadOnly="false" isOrdered="false" isUnique="false" xmi:type="uml:Property" aggregation="none" isDerived="false" isID="false" type="AAAAAAFgifa7bkgCnnY=">
+						<lowerValue xmi:id="AAAAAAFgilgq7oJ2xKY=" xmi:type="uml:LiteralInteger" value="0"/>
+						<upperValue xmi:id="AAAAAAFgilgq7oJ3sUo=" xmi:type="uml:LiteralInteger" value="1"/>
+					</ownedEnd>
+					<memberEnd xmi:idref="AAAAAAFgigbwj04LlgU="/>
+					<memberEnd xmi:idref="AAAAAAFgigbwj04Mb6Q="/>
+				</ownedMember>
+				<generalization xmi:id="AAAAAAFgifktkUjDY3A=" visibility="public" xmi:type="uml:Generalization" specific="AAAAAAFgifJ5vketP30=" general="AAAAAAFgifeuVUhWQRk="/>
+			</packagedElement>
+			<packagedElement xmi:id="AAAAAAFgifa7bkgCnnY=" name="Agencia" visibility="public" isAbstract="false" isFinalSpecialization="false" isLeaf="false" xmi:type="uml:Class" isActive="false">
+				<ownedMember xmi:id="AAAAAAFgigf5BE/bAq0=" visibility="public" xmi:type="uml:Association" isDerived="false">
+					<ownedEnd xmi:id="AAAAAAFgigf5BE/cIY4=" visibility="public" isStatic="false" isLeaf="false" isReadOnly="false" isOrdered="false" isUnique="false" xmi:type="uml:Property" aggregation="none" isDerived="false" isID="false" type="AAAAAAFgifa7bkgCnnY=">
+						<lowerValue xmi:id="AAAAAAFgilgq8oJ46d4=" xmi:type="uml:LiteralInteger" value="1"/>
+						<upperValue xmi:id="AAAAAAFgilgq8oJ5YIw=" xmi:type="uml:LiteralInteger" value="1"/>
+					</ownedEnd>
+					<ownedEnd xmi:id="AAAAAAFgigf5BE/dGY0=" visibility="public" isStatic="false" isLeaf="false" isReadOnly="false" isOrdered="false" isUnique="false" xmi:type="uml:Property" aggregation="none" isDerived="false" isID="false" type="AAAAAAFgifeuVUhWQRk=">
+						<lowerValue xmi:id="AAAAAAFgilgq8oJ6qkE=" xmi:type="uml:LiteralInteger" value="0"/>
+						<upperValue xmi:id="AAAAAAFgilgq8oJ7pIw=" xmi:type="uml:LiteralUnlimitedNatural" value="*"/>
+					</ownedEnd>
+					<memberEnd xmi:idref="AAAAAAFgigf5BE/cIY4="/>
+					<memberEnd xmi:idref="AAAAAAFgigf5BE/dGY0="/>
+				</ownedMember>
+			</packagedElement>
+			<packagedElement xmi:id="AAAAAAFgifeuVUhWQRk=" name="Funcionario" visibility="public" isAbstract="false" isFinalSpecialization="false" isLeaf="false" xmi:type="uml:Class" isActive="false">
+				<generalization xmi:id="AAAAAAFgifkQD0iq0do=" visibility="public" xmi:type="uml:Generalization" specific="AAAAAAFgifeuVUhWQRk=" general="AAAAAAFgifJ5vketP30="/>
+				<generalization xmi:id="AAAAAAFgigsaxFV//Rc=" visibility="public" xmi:type="uml:Generalization" specific="AAAAAAFgifeuVUhWQRk=" general="AAAAAAFgiflIH0jUj0w="/>
+			</packagedElement>
+			<packagedElement xmi:id="AAAAAAFgiflIH0jUj0w=" name="Pessoa" visibility="public" isAbstract="false" isFinalSpecialization="false" isLeaf="false" xmi:type="uml:Class" isActive="false"/>
+			<packagedElement xmi:id="AAAAAAFgifq14UkTvGU=" name="Cliente" visibility="public" isAbstract="false" isFinalSpecialization="false" isLeaf="false" xmi:type="uml:Class" isActive="false">
+				<ownedMember xmi:id="AAAAAAFgig9zknXlbDA=" visibility="public" xmi:type="uml:Association" isDerived="false">
+					<ownedEnd xmi:id="AAAAAAFgig9zknXmii0=" visibility="public" isStatic="false" isLeaf="false" isReadOnly="false" isOrdered="false" isUnique="false" xmi:type="uml:Property" aggregation="none" isDerived="false" isID="false" type="AAAAAAFgifq14UkTvGU=">
+						<lowerValue xmi:id="AAAAAAFgilgq84J8XIQ=" xmi:type="uml:LiteralInteger" value="1"/>
+						<upperValue xmi:id="AAAAAAFgilgq84J91+U=" xmi:type="uml:LiteralInteger" value="1"/>
+					</ownedEnd>
+					<ownedEnd xmi:id="AAAAAAFgig9zk3Xn9Dc=" visibility="public" isStatic="false" isLeaf="false" isReadOnly="false" isOrdered="false" isUnique="false" xmi:type="uml:Property" aggregation="none" isDerived="false" isID="false" type="AAAAAAFgif4GBEo3AxA=">
+						<lowerValue xmi:id="AAAAAAFgilgq84J+apA=" xmi:type="uml:LiteralInteger" value="0"/>
+						<upperValue xmi:id="AAAAAAFgilgq84J/jMI=" xmi:type="uml:LiteralUnlimitedNatural" value="*"/>
+					</ownedEnd>
+					<memberEnd xmi:idref="AAAAAAFgig9zknXmii0="/>
+					<memberEnd xmi:idref="AAAAAAFgig9zk3Xn9Dc="/>
+				</ownedMember>
+				<generalization xmi:id="AAAAAAFgigsSY1UyZpw=" visibility="public" xmi:type="uml:Generalization" specific="AAAAAAFgifq14UkTvGU=" general="AAAAAAFgiflIH0jUj0w="/>
+			</packagedElement>
+			<packagedElement xmi:id="AAAAAAFgiftbj0lb/Ec=" name="Emprestimo" visibility="public" isAbstract="false" isFinalSpecialization="false" isLeaf="false" xmi:type="uml:Class" isActive="false">
+				<ownedMember xmi:id="AAAAAAFgigmKC1LcZ34=" visibility="public" xmi:type="uml:Association" isDerived="false">
+					<ownedEnd xmi:id="AAAAAAFgigmKC1LdMx4=" visibility="public" isStatic="false" isLeaf="false" isReadOnly="false" isOrdered="false" isUnique="false" xmi:type="uml:Property" aggregation="none" isDerived="false" isID="false" type="AAAAAAFgiftbj0lb/Ec=">
+						<lowerValue xmi:id="AAAAAAFgilgq9IKAQTg=" xmi:type="uml:LiteralInteger" value="0"/>
+						<upperValue xmi:id="AAAAAAFgilgq9IKBZXc=" xmi:type="uml:LiteralUnlimitedNatural" value="*"/>
+					</ownedEnd>
+					<ownedEnd xmi:id="AAAAAAFgigmKC1LezTk=" visibility="public" isStatic="false" isLeaf="false" isReadOnly="false" isOrdered="false" isUnique="false" xmi:type="uml:Property" aggregation="none" isDerived="false" isID="false" type="AAAAAAFgifq14UkTvGU=">
+						<lowerValue xmi:id="AAAAAAFgilgq9IKChUY=" xmi:type="uml:LiteralInteger" value="1"/>
+						<upperValue xmi:id="AAAAAAFgilgq9IKDBdA=" xmi:type="uml:LiteralInteger" value="1"/>
+					</ownedEnd>
+					<memberEnd xmi:idref="AAAAAAFgigmKC1LdMx4="/>
+					<memberEnd xmi:idref="AAAAAAFgigmKC1LezTk="/>
+				</ownedMember>
+			</packagedElement>
+			<packagedElement xmi:id="AAAAAAFgifypuEnO2S0=" name="Prestacao" visibility="public" isAbstract="false" isFinalSpecialization="false" isLeaf="false" xmi:type="uml:Class" isActive="false">
+				<ownedMember xmi:id="AAAAAAFgig0GdGtLlAQ=" visibility="public" xmi:type="uml:Association" isDerived="false">
+					<ownedEnd xmi:id="AAAAAAFgig0GdGtMOJk=" visibility="public" isStatic="false" isLeaf="false" isReadOnly="false" isOrdered="false" isUnique="false" xmi:type="uml:Property" aggregation="shared" isDerived="false" isID="false" type="AAAAAAFgifypuEnO2S0=">
+						<lowerValue xmi:id="AAAAAAFgilgq9YKECPk=" xmi:type="uml:LiteralInteger" value="1"/>
+						<upperValue xmi:id="AAAAAAFgilgq9YKFdvg=" xmi:type="uml:LiteralUnlimitedNatural" value="*"/>
+					</ownedEnd>
+					<ownedEnd xmi:id="AAAAAAFgig0GdWtNCj4=" visibility="public" isStatic="false" isLeaf="false" isReadOnly="false" isOrdered="false" isUnique="false" xmi:type="uml:Property" aggregation="none" isDerived="false" isID="false" type="AAAAAAFgiftbj0lb/Ec=">
+						<lowerValue xmi:id="AAAAAAFgilgq9YKG3ng=" xmi:type="uml:LiteralInteger" value="1"/>
+						<upperValue xmi:id="AAAAAAFgilgq9YKHtKM=" xmi:type="uml:LiteralInteger" value="1"/>
+					</ownedEnd>
+					<memberEnd xmi:idref="AAAAAAFgig0GdGtMOJk="/>
+					<memberEnd xmi:idref="AAAAAAFgig0GdWtNCj4="/>
+				</ownedMember>
+			</packagedElement>
+			<packagedElement xmi:id="AAAAAAFgif4GBEo3AxA=" name="Conta" visibility="public" isAbstract="false" isFinalSpecialization="false" isLeaf="false" xmi:type="uml:Class" isActive="false">
+				<ownedMember xmi:id="AAAAAAFgigwjTVxZcMU=" visibility="public" xmi:type="uml:Association" isDerived="false">
+					<ownedEnd xmi:id="AAAAAAFgigwjTVxadyc=" visibility="public" isStatic="false" isLeaf="false" isReadOnly="false" isOrdered="false" isUnique="false" xmi:type="uml:Property" aggregation="none" isDerived="false" isID="false" type="AAAAAAFgif4GBEo3AxA=">
+						<lowerValue xmi:id="AAAAAAFgilgq9YKI5Mo=" xmi:type="uml:LiteralInteger" value="0"/>
+						<upperValue xmi:id="AAAAAAFgilgq9YKJ6Oc=" xmi:type="uml:LiteralUnlimitedNatural" value="*"/>
+					</ownedEnd>
+					<ownedEnd xmi:id="AAAAAAFgigwjTVxbFjg=" visibility="public" isStatic="false" isLeaf="false" isReadOnly="false" isOrdered="false" isUnique="false" xmi:type="uml:Property" aggregation="none" isDerived="false" isID="false" type="AAAAAAFgifJ5vketP30=">
+						<lowerValue xmi:id="AAAAAAFgilgq9YKKkFE=" xmi:type="uml:LiteralInteger" value="1"/>
+						<upperValue xmi:id="AAAAAAFgilgq9YKLZqE=" xmi:type="uml:LiteralInteger" value="1"/>
+					</ownedEnd>
+					<memberEnd xmi:idref="AAAAAAFgigwjTVxadyc="/>
+					<memberEnd xmi:idref="AAAAAAFgigwjTVxbFjg="/>
+				</ownedMember>
+			</packagedElement>
+			<packagedElement xmi:id="AAAAAAFgif+iXUq3DAY=" name="Cartao" visibility="public" isAbstract="false" isFinalSpecialization="false" isLeaf="false" xmi:type="uml:Class" isActive="false">
+				<ownedMember xmi:id="AAAAAAFgihNMpYcfvA4=" visibility="public" xmi:type="uml:Dependency" client="AAAAAAFgif+iXUq3DAY=" supplier="AAAAAAFgifq14UkTvGU="/>
+			</packagedElement>
+			<packagedElement xmi:id="AAAAAAFgigIZkEsdnRE=" name="ContaCorrente" visibility="public" isAbstract="false" isFinalSpecialization="false" isLeaf="false" xmi:type="uml:Class" isActive="false">
+				<ownedMember xmi:id="AAAAAAFgigu/jlkkzMc=" visibility="public" xmi:type="uml:Association" isDerived="false">
+					<ownedEnd xmi:id="AAAAAAFgigu/jlkl5E0=" visibility="public" isStatic="false" isLeaf="false" isReadOnly="false" isOrdered="false" isUnique="false" xmi:type="uml:Property" aggregation="none" isDerived="false" isID="false" type="AAAAAAFgigIZkEsdnRE=">
+						<lowerValue xmi:id="AAAAAAFgilgq9oKMsj4=" xmi:type="uml:LiteralInteger" value="1"/>
+						<upperValue xmi:id="AAAAAAFgilgq9oKN2Bs=" xmi:type="uml:LiteralInteger" value="1"/>
+					</ownedEnd>
+					<ownedEnd xmi:id="AAAAAAFgigu/jlkmFUU=" visibility="public" isStatic="false" isLeaf="false" isReadOnly="false" isOrdered="false" isUnique="false" xmi:type="uml:Property" aggregation="none" isDerived="false" isID="false" type="AAAAAAFgigKRSktOrWA=">
+						<lowerValue xmi:id="AAAAAAFgilgq9oKOkO0=" xmi:type="uml:LiteralInteger" value="0"/>
+						<upperValue xmi:id="AAAAAAFgilgq9oKP4Q4=" xmi:type="uml:LiteralUnlimitedNatural" value="*"/>
+					</ownedEnd>
+					<memberEnd xmi:idref="AAAAAAFgigu/jlkl5E0="/>
+					<memberEnd xmi:idref="AAAAAAFgigu/jlkmFUU="/>
+				</ownedMember>
+				<generalization xmi:id="AAAAAAFgigSFakw3Oig=" visibility="public" xmi:type="uml:Generalization" specific="AAAAAAFgigIZkEsdnRE=" general="AAAAAAFgif4GBEo3AxA="/>
+			</packagedElement>
+			<packagedElement xmi:id="AAAAAAFgigKRSktOrWA=" name="TalaoCheque" visibility="public" isAbstract="false" isFinalSpecialization="false" isLeaf="false" xmi:type="uml:Class" isActive="false"/>
+			<packagedElement xmi:id="AAAAAAFgigM7YEubrhM=" name="ContaCorrenteNormal" visibility="public" isAbstract="false" isFinalSpecialization="false" isLeaf="false" xmi:type="uml:Class" isActive="false">
+				<generalization xmi:id="AAAAAAFgigOOo0vMgcc=" visibility="public" xmi:type="uml:Generalization" specific="AAAAAAFgigM7YEubrhM=" general="AAAAAAFgigIZkEsdnRE="/>
+			</packagedElement>
+			<packagedElement xmi:id="AAAAAAFgigOqPkvdYN0=" name="ContaCorrenteEspecial" visibility="public" isAbstract="false" isFinalSpecialization="false" isLeaf="false" xmi:type="uml:Class" isActive="false">
+				<generalization xmi:id="AAAAAAFgigRwbkwktc0=" visibility="public" xmi:type="uml:Generalization" specific="AAAAAAFgigOqPkvdYN0=" general="AAAAAAFgigIZkEsdnRE="/>
+			</packagedElement>
+			<packagedElement xmi:id="AAAAAAFgigSZK0xIm7Q=" name="ContaPoupanca" visibility="public" isAbstract="false" isFinalSpecialization="false" isLeaf="false" xmi:type="uml:Class" isActive="false">
+				<generalization xmi:id="AAAAAAFgigTPFkx5x5c=" visibility="public" xmi:type="uml:Generalization" specific="AAAAAAFgigSZK0xIm7Q=" general="AAAAAAFgif4GBEo3AxA="/>
+			</packagedElement>
+			<packagedElement xmi:id="AAAAAAFgigTnEkyKBFw=" name="Movimento" visibility="public" isAbstract="false" isFinalSpecialization="false" isLeaf="false" xmi:type="uml:Class" isActive="false">
+				<ownedMember xmi:id="AAAAAAFgigWYl0zehUI=" visibility="public" xmi:type="uml:Association" isDerived="false">
+					<ownedEnd xmi:id="AAAAAAFgigWYl0zf5Ig=" visibility="public" isStatic="false" isLeaf="false" isReadOnly="false" isOrdered="false" isUnique="false" xmi:type="uml:Property" aggregation="shared" isDerived="false" isID="false" type="AAAAAAFgigTnEkyKBFw=">
+						<lowerValue xmi:id="AAAAAAFgilgq94KQULY=" xmi:type="uml:LiteralInteger" value="0"/>
+						<upperValue xmi:id="AAAAAAFgilgq94KRTbY=" xmi:type="uml:LiteralUnlimitedNatural" value="*"/>
+					</ownedEnd>
+					<ownedEnd xmi:id="AAAAAAFgigWYmEzgdK8=" visibility="public" isStatic="false" isLeaf="false" isReadOnly="false" isOrdered="false" isUnique="false" xmi:type="uml:Property" aggregation="none" isDerived="false" isID="false" type="AAAAAAFgif4GBEo3AxA=">
+						<lowerValue xmi:id="AAAAAAFgilgq+IKSAnc=" xmi:type="uml:LiteralInteger" value="1"/>
+						<upperValue xmi:id="AAAAAAFgilgq+IKTBcI=" xmi:type="uml:LiteralInteger" value="1"/>
+					</ownedEnd>
+					<memberEnd xmi:idref="AAAAAAFgigWYl0zf5Ig="/>
+					<memberEnd xmi:idref="AAAAAAFgigWYmEzgdK8="/>
+				</ownedMember>
+			</packagedElement>
+		</packagedElement>
+	</uml:Model>
+</xmi:XMI>
