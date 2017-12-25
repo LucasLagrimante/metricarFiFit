@@ -18,7 +18,7 @@ public class Diagrama {
         return classes;
     }
 
-    public static Classe getClassePorId(String id) {
+    public static Classe getClasseById(String id) {
         for (Classe obj : classes) {
             if (obj.getId().equals(id)) {
                 return obj;
@@ -46,5 +46,4 @@ public class Diagrama {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
 }

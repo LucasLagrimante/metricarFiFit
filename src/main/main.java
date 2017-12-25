@@ -27,7 +27,6 @@ import model.Ligacao;
  */
 public class main extends javax.swing.JFrame {
 
-    int temp;
     Helper helper = new Helper();
     String lower, upper;
     TipoCardinalidade tipoCardinalidade;
@@ -99,79 +98,32 @@ public class main extends javax.swing.JFrame {
             dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(xmlFileLer);
             doc.getDocumentElement().normalize();
-
-            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
-
             NodeList listaClasses = doc.getElementsByTagName("packagedElement");
+            helper.memorizaClasses(listaClasses);
 
-            System.out.println("----------------------------");
-
-            // lista as classes
-            for (temp = 1; temp < listaClasses.getLength(); temp++) {
-                Node nodeClasse = listaClasses.item(temp);
-                if (nodeClasse.getNodeType() == Node.ELEMENT_NODE) {
-                    Element paiElement = (Element) nodeClasse;
-                    Classe classe = new Classe(paiElement.getAttribute("xmi:id"), paiElement.getAttribute("name"));
-                    Diagrama.addClasse(classe);
-                }
-            }
-
-            for (temp = 1; temp < listaClasses.getLength(); temp++) {
-                Node nodeClasse = listaClasses.item(temp);
+            for (int count = 1; count < listaClasses.getLength(); count++) {
+                //packagedElement
+                Node nodeClasse = listaClasses.item(count);
                 Element paiElement = (Element) nodeClasse;
-                //pega os filhos das classes
-                NodeList filhos = helper.getFilhos(paiElement);
-                //lista os filhos primarios
-                for (temp = 0; temp < filhos.getLength(); temp++) {
-                    Node nodeFilho = filhos.item(temp);
-                    if (nodeClasse.getNodeType() == Node.ELEMENT_NODE) {
-                        Element filhoElement = (Element) nodeFilho;
-                        //filho pode ser associacao ou generalizacao
-                        if (filhoElement.getAttribute("xmi:type").equals(TipoLigacao.Association.getTipoLigacao())) {
-                            //descer mais um nivel e buscar lower e upper value
-                            NodeList netos = helper.getFilhos(filhoElement);
-                            for (temp = 0; temp < netos.getLength(); temp++) {
-                                //filhos do ownedMember = ownedEnd
-                                Node nodeNeto = netos.item(temp);
-                                Element netoElement = (Element) nodeNeto;
-                                if (nodeNeto.getNodeType() == Node.ELEMENT_NODE) {
-                                    //nodes lower upper value
-                                    NodeList tataranetos = helper.getFilhos(nodeNeto);
-                                    for (temp = 0; temp < tataranetos.getLength(); temp++) {
-                                        Node nodeTataraneto = netos.item(temp);
-                                        Element tataranetoElement = (Element) nodeTataraneto;
-                                        if (nodeTataraneto.getNodeType() == Node.ELEMENT_NODE) {
+                Classe pai = Diagrama.getClasseById(paiElement.getAttribute("xmi:id"));
+                NodeList relacionamentos = helper.getFilhos(paiElement);
 
-                                            if (tataranetoElement.getNodeName().equals("lowerValue")) {
-                                                lower = tataranetoElement.getAttribute("value");
-                                            } else if (tataranetoElement.getNodeName().equals("upperValue")) {
-                                                upper = tataranetoElement.getAttribute("value");
-                                            }
-
-                                        }
-                                    }
-                                    if (lower.equals("0") || upper.equals("1")) {
-                                        tipoCardinalidade = TipoCardinalidade.ZEROUM;
-                                    } else if (lower.equals("1") || upper.equals("1")) {
-                                        tipoCardinalidade = TipoCardinalidade.UM;
-                                    } else if (lower.equals("0") || upper.equals("*")) {
-                                        tipoCardinalidade = TipoCardinalidade.ZEROMUITOS;
-                                    } else if (lower.equals("1") || upper.equals("*")) {
-                                        tipoCardinalidade = TipoCardinalidade.UMMUITOS;
-                                    } else if (lower.equals("*") || upper.equals("*")) {
-                                        tipoCardinalidade = TipoCardinalidade.MUITOS;
-                                    }
-                                    Ligacao ligacao = new Ligacao(netoElement.getAttribute("xmi:id"), Diagrama.getClassePorId(paiElement.getAttribute("xmi:id")), tipoCardinalidade, TipoLigacao.Association);
-                                    Diagrama.addLigacao(ligacao);
-                                }
-                            }
-                            //filho pode ser associacao ou generalizacao
-                        } else if (filhoElement.getNodeName().equals(TipoLigacao.Generalization.getTipoLigacao())) {
-                            Ligacao ligacao = new Ligacao(filhoElement.getAttribute("xmi:id"), Diagrama.getClassePorId(filhoElement.getAttribute("specific")), Diagrama.getClassePorId(filhoElement.getAttribute("general")), TipoLigacao.Generalization);
-                            Diagrama.addLigacao(ligacao);
+                for (int count1 = 0; count1 < relacionamentos.getLength(); count1++) {
+                    //ownedMember
+                    Node relacionamento = relacionamentos.item(count1);
+                    if (relacionamento.getNodeType() == Node.ELEMENT_NODE) {
+                        Element relacao = (Element) relacionamento;
+                        if (relacao.getAttribute("xmi:type").equals(TipoLigacao.Association.getTipoLigacao())) {
+                            pai.somaFi(helper.calculaFiAssociation(relacao, pai.getId()));
                         }
+
+//                        else if (elementoEnvolvido.getNodeName().equals(TipoLigacao.Generalization.getTipoLigacao())) {
+//                            Ligacao ligacao = new Ligacao(filhoElement.getAttribute("xmi:id"), Diagrama.getClasseById(filhoElement.getAttribute("specific")), Diagrama.getClassePorId(filhoElement.getAttribute("general")), TipoLigacao.Generalization);
+//                            Diagrama.addLigacao(ligacao);
+//                        }
                     }
                 }
+                System.out.println(pai.getNome() + ": " + pai.getFi());
             }
         } catch (Exception e) {
             e.printStackTrace();
