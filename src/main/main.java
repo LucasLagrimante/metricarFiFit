@@ -30,6 +30,7 @@ public class main extends javax.swing.JFrame {
     Helper helper = new Helper();
     String lower, upper;
     TipoCardinalidade tipoCardinalidade;
+    int count;
 
     public main() {
         initComponents();
@@ -101,18 +102,18 @@ public class main extends javax.swing.JFrame {
             NodeList listaClasses = doc.getElementsByTagName("packagedElement");
             helper.memorizaClasses(listaClasses);
 
-            for (int count = 1; count < listaClasses.getLength(); count++) {
+            for (count = 1; count < listaClasses.getLength(); count++) {
                 //packagedElement
                 Node nodeClasse = listaClasses.item(count);
                 Element paiElement = (Element) nodeClasse;
                 Classe pai = Diagrama.getClasseById(paiElement.getAttribute("xmi:id"));
                 NodeList relacionamentos = helper.getFilhos(paiElement);
 
-                for (int count1 = 0; count1 < relacionamentos.getLength(); count1++) {
+                for (count = 0; count < relacionamentos.getLength(); count++) {
                     //ownedMember
-                    Node relacionamento = relacionamentos.item(count1);
-                    if (relacionamento.getNodeType() == Node.ELEMENT_NODE) {
-                        Element relacao = (Element) relacionamento;
+                    Node nodeRelacionamento = relacionamentos.item(count);
+                    if (nodeRelacionamento.getNodeType() == Node.ELEMENT_NODE) {
+                        Element relacao = (Element) nodeRelacionamento;
                         if (relacao.getAttribute("xmi:type").equals(TipoLigacao.Association.getTipoLigacao())) {
                             pai.somaFi(helper.calculaFiAssociation(relacao, pai.getId()));
                         }
