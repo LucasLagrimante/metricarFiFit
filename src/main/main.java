@@ -7,6 +7,7 @@ package main;
 
 import Enum.TipoLigacao;
 import Storage.Diagrama;
+import Storage.Helper;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -27,6 +28,9 @@ import org.w3c.dom.NamedNodeMap;
  * @author Lucas Lagrimante
  */
 public class main extends javax.swing.JFrame {
+
+    int temp;
+    Helper helper = new Helper();
 
     public main() {
         initComponents();
@@ -82,7 +86,6 @@ public class main extends javax.swing.JFrame {
 
     private void jbAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAbrirActionPerformed
 
-        int temp;
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter(new FileNameExtensionFilter("Filtro .xml", "xml"));
         fileChooser.setAcceptAllFileFilterUsed(false);
@@ -103,40 +106,30 @@ public class main extends javax.swing.JFrame {
 
             System.out.println("----------------------------");
 
+            // lista as classes
             for (temp = 1; temp < listaClasses.getLength(); temp++) {
-                Node nNode = listaClasses.item(temp);
-            }
-
-            System.out.println("----------------------------");
-
-            NodeList listaAssociacao = doc.getElementsByTagName("ownedMember");
-
-            for (temp = 0; temp < listaAssociacao.getLength(); temp++) {
-
-                Node nNode1 = listaAssociacao.item(temp);
-                Element eElement1 = (Element) nNode1;
-                System.out.println("Ligacao : " + eElement1.getAttribute("xmi:type"));
-
-                if (eElement1.getAttribute("xmi:type").equals(TipoLigacao.Association.getTipoLigacao())) {
-//                    Ligacao ligacao = new Ligacao(origem, destino, TipoLigacao.Association);
-//                    Diagrama.addLigacao(ligacao);
-                } else if (eElement1.getAttribute("xmi:type").equals(TipoLigacao.Dependency.getTipoLigacao())) {
-//                    Ligacao ligacao = new Ligacao(origem, destino, TipoLigacao.Dependency);
-//                    Diagrama.addLigacao(ligacao);
+                Node nodeClasse = listaClasses.item(temp);
+                if (nodeClasse.getNodeType() == Node.ELEMENT_NODE) {
+                    Element eElement = (Element) nodeClasse;
+                    Classe classe = new Classe(eElement.getAttribute("xmi:id"), eElement.getAttribute("name"));
+                    Diagrama.addClasse(classe);
+                    //pega os filhos das classes
+                    NodeList filhos = helper.getFilhos(nodeClasse);
+                    //lista os filhos primarios
+                    for (temp = 0; temp < filhos.getLength(); temp++) {
+                        Node nodeFilho = filhos.item(temp);
+                        if (nodeClasse.getNodeType() == Node.ELEMENT_NODE) {
+                            Element fElement = (Element) nodeFilho;
+                            //filho pode ser associacao ou generalizacao
+                            if (eElement.getAttribute("xmi:type").equals(TipoLigacao.Association.getTipoLigacao())) {
+                                //descer mais um nivel e buscar lower e upper value
+                            } else if (fElement.getNodeName().equals(TipoLigacao.Generalization.getTipoLigacao())) {
+                                Ligacao ligacao = new Ligacao(Diagrama.getClassePorId(fElement.getAttribute("specific")), Diagrama.getClassePorId(fElement.getAttribute("general")), TipoLigacao.Generalization);
+                                Diagrama.addLigacao(ligacao);
+                            }
+                        }
+                    }
                 }
-            }
-
-            System.out.println("----------------------------");
-
-            NodeList listaDependencias = doc.getElementsByTagName("generalization");
-
-            for (temp = 0; temp < listaDependencias.getLength(); temp++) {
-
-                Node nNode2 = listaDependencias.item(temp);
-                Element eElement2 = (Element) nNode2;
-                System.out.println("Ligacao : " + eElement2.getAttribute("xmi:type"));
-                Ligacao ligacao = new Ligacao(Diagrama.getClassePorId(eElement2.getAttribute("specific")), Diagrama.getClassePorId(eElement2.getAttribute("general")), TipoLigacao.Generalization);
-                Diagrama.addLigacao(ligacao);
             }
         } catch (Exception e) {
             e.printStackTrace();

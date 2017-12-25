@@ -47,14 +47,4 @@ public class Diagrama {
         this.nome = nome;
     }
 
-    public NodeList getFilhos(Node pai) {
-        if (pai.getNodeType() == Node.ELEMENT_NODE) {
-            if (pai.hasChildNodes()) {
-                return pai.getChildNodes();
-            }
-        }
-        return null;
-    }
-
-    
 }
