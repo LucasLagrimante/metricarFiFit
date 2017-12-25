@@ -6,14 +6,12 @@ public class Ligacao {
 
     private Classe classeOrigem;
     private Classe classeDestino;
-    private TipoLigacao tipoOrigem;
-    private TipoLigacao tipoDestino;
+    private TipoLigacao tipo;
 
-    public Ligacao(Classe classeOrigem, Classe classeDestino, TipoLigacao tipoOrigem, TipoLigacao tipoDestino) {
+    public Ligacao(Classe classeOrigem, Classe classeDestino, TipoLigacao tipo) {
         this.classeOrigem = classeOrigem;
         this.classeDestino = classeDestino;
-        this.tipoOrigem = tipoOrigem;
-        this.tipoDestino = tipoDestino;
+        this.tipo = tipo;
     }
 
     public Classe getClasseOrigem() {
@@ -32,20 +30,12 @@ public class Ligacao {
         this.classeDestino = classeDestino;
     }
 
-    public TipoLigacao getTipoOrigem() {
-        return tipoOrigem;
+    public TipoLigacao getTipo() {
+        return tipo;
     }
 
-    public void setTipoOrigem(TipoLigacao tipoOrigem) {
-        this.tipoOrigem = tipoOrigem;
-    }
-
-    public TipoLigacao getTipoDestino() {
-        return tipoDestino;
-    }
-
-    public void setTipoDestino(TipoLigacao tipoDestino) {
-        this.tipoDestino = tipoDestino;
+    public void setTipo(TipoLigacao tipo) {
+        this.tipo = tipo;
     }
 
 }

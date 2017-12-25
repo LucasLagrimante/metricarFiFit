@@ -1,8 +1,9 @@
 package Enum;
 
 public enum TipoLigacao {
-    Association("Association"),
-    Generalization("Generalization");
+    Association("uml:Association"),
+    Generalization("uml:Generalization"),
+    Dependency("uml:Dependency");
 
     private final String tipo;
 

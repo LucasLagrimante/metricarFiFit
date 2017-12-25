@@ -15,6 +15,15 @@ public class Diagrama {
         return classes;
     }
 
+    public static Classe getClassePorId(String id) {
+        for (Classe obj : classes) {
+            if (obj.getId().equals(id)) {
+                return obj;
+            }
+        }
+        return null;
+    }
+
     public static void addClasse(Classe classe) {
         Diagrama.classes.add(classe);
     }
@@ -23,7 +32,7 @@ public class Diagrama {
         return ligacoes;
     }
 
-    public static void addLigacoes(Ligacao ligacao) {
+    public static void addLigacao(Ligacao ligacao) {
         Diagrama.ligacoes.add(ligacao);
     }
 

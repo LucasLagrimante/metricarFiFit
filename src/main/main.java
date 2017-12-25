@@ -5,6 +5,8 @@
  */
 package main;
 
+import Enum.TipoLigacao;
+import Storage.Diagrama;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -14,6 +16,8 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import java.io.File;
+import model.Classe;
+import model.Ligacao;
 
 /**
  *
@@ -75,6 +79,7 @@ public class main extends javax.swing.JFrame {
 
     private void jbAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAbrirActionPerformed
 
+        int temp;
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter(new FileNameExtensionFilter("Filtro .xml", "xml"));
         fileChooser.setAcceptAllFileFilterUsed(false);
@@ -91,21 +96,54 @@ public class main extends javax.swing.JFrame {
 
             System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 
-            NodeList nList = doc.getElementsByTagName("packagedElement");
+            NodeList listaClasses = doc.getElementsByTagName("packagedElement");
 
             System.out.println("----------------------------");
 
-            for (int temp = 1; temp < nList.getLength(); temp++) {
+            for (temp = 1; temp < listaClasses.getLength(); temp++) {
 
-                Node nNode = nList.item(temp);
+                Node nNode = listaClasses.item(temp);
 
-//                System.out.println("\nCurrent Element :" + nNode.getNodeName());
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
                     Element eElement = (Element) nNode;
-                    System.out.println("Nome Classe: " + eElement.getAttribute("name"));
-//                  System.out.println("First Name : " + eElement.getElementsByTagName("firstname").item(0).getTextContent());
+//                    System.out.println("nome : " + eElement.getAttribute("name"));
+//                    System.out.println("id : " + eElement.getAttribute("xmi:id"));
+                    Classe classe = new Classe(eElement.getAttribute("xmi:id"), eElement.getAttribute("name"));
+                    Diagrama.addClasse(classe);
                 }
+            }
+
+            System.out.println("----------------------------");
+
+            NodeList listaAssociacao = doc.getElementsByTagName("ownedMember");
+
+            for (temp = 0; temp < listaAssociacao.getLength(); temp++) {
+
+                Node nNode1 = listaAssociacao.item(temp);
+                Element eElement1 = (Element) nNode1;
+                System.out.println("Ligacao : " + eElement1.getAttribute("xmi:type"));
+
+                if (eElement1.getAttribute("xmi:type").equals(TipoLigacao.Association.getTipoLigacao())) {
+//                    Ligacao ligacao = new Ligacao(origem, destino, TipoLigacao.Association);
+//                    Diagrama.addLigacao(ligacao);
+                } else if (eElement1.getAttribute("xmi:type").equals(TipoLigacao.Dependency.getTipoLigacao())) {
+//                    Ligacao ligacao = new Ligacao(origem, destino, TipoLigacao.Dependency);
+//                    Diagrama.addLigacao(ligacao);
+                }
+            }
+
+            System.out.println("----------------------------");
+
+            NodeList listaDependencias = doc.getElementsByTagName("generalization");
+
+            for (temp = 0; temp < listaDependencias.getLength(); temp++) {
+
+                Node nNode2 = listaDependencias.item(temp);
+                Element eElement2 = (Element) nNode2;
+                System.out.println("Ligacao : " + eElement2.getAttribute("xmi:type"));
+                Ligacao ligacao = new Ligacao(Diagrama.getClassePorId(eElement2.getAttribute("specific")), Diagrama.getClassePorId(eElement2.getAttribute("general")), TipoLigacao.Generalization);
+                Diagrama.addLigacao(ligacao);
             }
         } catch (Exception e) {
             e.printStackTrace();
