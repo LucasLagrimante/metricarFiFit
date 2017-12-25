@@ -16,8 +16,11 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import java.io.File;
+import java.io.PrintStream;
+import java.util.List;
 import model.Classe;
 import model.Ligacao;
+import org.w3c.dom.NamedNodeMap;
 
 /**
  *
@@ -101,17 +104,7 @@ public class main extends javax.swing.JFrame {
             System.out.println("----------------------------");
 
             for (temp = 1; temp < listaClasses.getLength(); temp++) {
-
                 Node nNode = listaClasses.item(temp);
-
-                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-
-                    Element eElement = (Element) nNode;
-//                    System.out.println("nome : " + eElement.getAttribute("name"));
-//                    System.out.println("id : " + eElement.getAttribute("xmi:id"));
-                    Classe classe = new Classe(eElement.getAttribute("xmi:id"), eElement.getAttribute("name"));
-                    Diagrama.addClasse(classe);
-                }
             }
 
             System.out.println("----------------------------");

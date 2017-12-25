@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Classe;
 import model.Ligacao;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class Diagrama {
 
@@ -44,4 +47,14 @@ public class Diagrama {
         this.nome = nome;
     }
 
+    public NodeList getFilhos(Node pai) {
+        if (pai.getNodeType() == Node.ELEMENT_NODE) {
+            if (pai.hasChildNodes()) {
+                return pai.getChildNodes();
+            }
+        }
+        return null;
+    }
+
+    
 }

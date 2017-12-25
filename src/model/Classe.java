@@ -1,9 +1,13 @@
 package model;
 
+import java.util.List;
+
 public class Classe {
 
     private String id;
     private String nome;
+    private List<Classe> dependencias;
+    private List<Classe> pendencias;
 
     public Classe(String id, String nome) {
         this.id = id;
