@@ -5,25 +5,29 @@ import Enum.TipoCardinalidade;
 
 public class Ligacao {
 
+    private String id;
     private Classe classeOrigem;
     private Classe classeDestino;
     private TipoCardinalidade cardinalidadeOrigem;
     private TipoCardinalidade cardinalidadeDestino;
     private TipoLigacao tipo;
 
-    public Ligacao(Classe classeOrigem, TipoCardinalidade cardinalidadeOrigem, TipoLigacao tipo) {
+    public Ligacao(String id, Classe classeOrigem, TipoCardinalidade cardinalidadeOrigem, TipoLigacao tipo) {
+        this.id = id;
         this.classeOrigem = classeOrigem;
         this.cardinalidadeOrigem = cardinalidadeOrigem;
         this.tipo = tipo;
     }
 
-    public Ligacao(Classe classeOrigem, Classe classeDestino, TipoLigacao tipo) {
+    public Ligacao(String id, Classe classeOrigem, Classe classeDestino, TipoLigacao tipo) {
+        this.id = id;
         this.classeOrigem = classeOrigem;
         this.classeDestino = classeDestino;
         this.tipo = tipo;
     }
 
-    public Ligacao(Classe classeOrigem, Classe classeDestino, TipoCardinalidade cardinalidadeOrigem, TipoCardinalidade cardinalidadeDestino, TipoLigacao tipo) {
+    public Ligacao(String id, Classe classeOrigem, Classe classeDestino, TipoCardinalidade cardinalidadeOrigem, TipoCardinalidade cardinalidadeDestino, TipoLigacao tipo) {
+        this.id = id;
         this.classeOrigem = classeOrigem;
         this.classeDestino = classeDestino;
         this.cardinalidadeOrigem = cardinalidadeOrigem;

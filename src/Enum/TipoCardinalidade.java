@@ -2,10 +2,10 @@ package Enum;
 
 public enum TipoCardinalidade {
     ZEROUM("0..1"),
-    UM("1"),
+    UM("1..1"),
     ZEROMUITOS("0..*"),
     UMMUITOS("1..*"),
-    MUITOS("1..*"),
+    MUITOS("*..*"),
     HERANCAORIGEM("->"),
     HERANCADESTINO("<-"),
     AGREGACAOORIGEM("-<"),
@@ -17,7 +17,7 @@ public enum TipoCardinalidade {
         this.tipo = tipo;
     }
 
-    public String getTipoLigacao() {
+    public String getTipoCardinalidade() {
         return tipo;
     }
 }
