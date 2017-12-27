@@ -182,6 +182,8 @@ public class main extends javax.swing.JFrame {
                                 }
                             } else if (nodeRelacao.getNodeName().equals("generalization") && relacaoElement.getAttribute("xmi:type").equals(TipoLigacao.Generalization.getTipoLigacao())) {
                                 Diagrama.getClasseById(relacaoElement.getAttribute("general")).somaFi(1);
+                                // diz que a classe origem é DEPENDENDE da classe destino
+                                Diagrama.getClasseById(relacaoElement.getAttribute("specific")).addDependeDe(Diagrama.getClasseById(relacaoElement.getAttribute("general")));
                             } else if (nodeRelacao.getNodeName().equals("ownedMember") && relacaoElement.getAttribute("xmi:type").equals(TipoLigacao.Dependency.getTipoLigacao())) {
 
                             }
@@ -190,6 +192,9 @@ public class main extends javax.swing.JFrame {
                 }
 
             }
+
+            //só pode ser feito uma única vez
+            Diagrama.calculaFitDasClasses();
 
             //imprimindo todas as classes depois de fazer todo calculo de FI e FIT
             for (count = 0; count < Diagrama.getClasses().size(); count++) {

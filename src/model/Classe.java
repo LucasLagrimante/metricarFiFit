@@ -10,7 +10,6 @@ public class Classe {
     private int fi;
     private int fit;
     private List<Classe> dependeDe = new ArrayList<>();
-    private List<Classe> geraDependenciaEm = new ArrayList<>();
 
     public Classe(String id, String nome) {
         this.fi = 0;
@@ -67,16 +66,8 @@ public class Classe {
         return dependeDe;
     }
 
-    public void setDependeDe(Classe dependeDe) {
+    public void addDependeDe(Classe dependeDe) {
         this.dependeDe.add(dependeDe);
-    }
-
-    public List<Classe> getGeraDependenciaEm() {
-        return geraDependenciaEm;
-    }
-
-    public void setGeraDependenciaEm(Classe geraDependenciaEm) {
-        this.geraDependenciaEm.add(geraDependenciaEm);
     }
 
 }

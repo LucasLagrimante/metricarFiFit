@@ -3,13 +3,11 @@ package Storage;
 import java.util.ArrayList;
 import java.util.List;
 import model.Classe;
-import model.Ligacao;
 
 public class Diagrama {
 
     private static String nome;
     private static List<Classe> classes = new ArrayList<>();
-    private static List<Ligacao> ligacoes = new ArrayList<>();
 
     public static List<Classe> getClasses() {
         return classes;
@@ -28,19 +26,20 @@ public class Diagrama {
         Diagrama.classes.add(classe);
     }
 
-    public static List<Ligacao> getLigacoes() {
-        return ligacoes;
-    }
-
-    public static void addLigacao(Ligacao ligacao) {
-        Diagrama.ligacoes.add(ligacao);
-    }
-
     public String getNome() {
         return nome;
     }
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public static void calculaFitDasClasses() {
+        for (int i = 0; i < classes.size(); i++) {
+            List<Classe> listaDependeDe = classes.get(i).getDependeDe();
+            for (int j = 0; j < listaDependeDe.size(); j++) {
+                classes.get(i).somaFit(listaDependeDe.get(j).getFi());
+            }
+        }
     }
 }
