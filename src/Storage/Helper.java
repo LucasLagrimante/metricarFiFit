@@ -52,7 +52,7 @@ public class Helper {
         return null;
     }
 
-    public static void listaOrdemIntegracao() {
+    public void listaOrdemIntegracao() {
         List<Classe> ordem = Diagrama.getOrdemIntegracao();
         if (ordem.size() > 0) {
             System.out.println("Ordem de Integração:");
@@ -62,7 +62,7 @@ public class Helper {
         }
     }
 
-    public static void listaStubs() {
+    public void listaStubs() {
         if (Diagrama.getStubs().size() > 0) {
             System.out.println("\nUtilizando stub para:");
             for (int i = 0; i < Diagrama.getStubs().size(); i++) {

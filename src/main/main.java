@@ -17,7 +17,10 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import java.io.File;
+import java.io.IOException;
+import javax.xml.parsers.ParserConfigurationException;
 import model.Ligacao;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -135,7 +138,7 @@ public class main extends javax.swing.JFrame {
                                         if (nodeOwnedEnd.getNodeName().equals("ownedEnd")) {
                                             Element ownerEndElement = (Element) nodeOwnedEnd;
 
-                                            if (ownerEndElement.getAttribute("aggregation").equals("shared")) {
+                                            if (ownerEndElement.getAttribute("aggregation").equals("shared") || ownerEndElement.getAttribute("aggregation").equals("composite")) {
                                                 ligacao.setTipo(TipoLigacao.Aggregation);
                                                 ligacao.setClasseOrigem(Diagrama.getClasseById(ownerEndElement.getAttribute("type")));
                                                 ligacao.setCardinalidadeOrigem(TipoCardinalidade.AggregationOrigem);
@@ -203,17 +206,16 @@ public class main extends javax.swing.JFrame {
 
             //só pode ser feito uma única vez
             Diagrama.calculaFiFit1();
-            
+
             //integra todas as classes
             while (Diagrama.getOrdemIntegracao().size() < Diagrama.getClasses().size()) {
                 Diagrama.integraClasses();
             }
-            
+
             //lista ordem de integração
             helper.listaOrdemIntegracao();
             helper.listaStubs();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException | ParserConfigurationException | SAXException e) {
         }
     }//GEN-LAST:event_jbAbrirXmiActionPerformed
 
