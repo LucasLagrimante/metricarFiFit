@@ -1,17 +1,29 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Classe {
 
     private String id;
     private String nome;
     private int fi;
     private int fit;
+    public List<Classe> liberaQuem = new ArrayList<>();
 
     public Classe(String id, String nome) {
         this.fi = 0;
         this.fit = 0;
         this.id = id;
         this.nome = nome;
+    }
+
+    public List<Classe> getLiberaQuem() {
+        return liberaQuem;
+    }
+
+    public void addLiberaQuem(Classe libera) {
+        this.liberaQuem.add(libera);
     }
 
     public int getFi() {

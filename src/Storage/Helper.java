@@ -1,6 +1,7 @@
 package Storage;
 
 import Enum.TipoCardinalidade;
+import java.util.List;
 import model.Classe;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -49,5 +50,24 @@ public class Helper {
 
         }
         return null;
+    }
+
+    public static void listaOrdemIntegracao() {
+        List<Classe> ordem = Diagrama.getOrdemIntegracao();
+        if (ordem.size() > 0) {
+            System.out.println("Ordem de Integração:");
+            for (int i = 0; i < Diagrama.getOrdemIntegracao().size(); i++) {
+                System.out.println(i + 1 + " - " + Diagrama.getOrdemIntegracao().get(i).getNome());
+            }
+        }
+    }
+
+    public static void listaStubs() {
+        if (Diagrama.getStubs().size() > 0) {
+            System.out.println("\nUtilizando stub para:");
+            for (int i = 0; i < Diagrama.getStubs().size(); i++) {
+                System.out.println(Diagrama.getStubs().get(i).getNome());
+            }
+        }
     }
 }

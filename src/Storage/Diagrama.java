@@ -10,9 +10,27 @@ public class Diagrama {
     private static String nome;
     private static List<Classe> classes = new ArrayList<>();
     private static List<Ligacao> ligacoes = new ArrayList<>();
+    private static List<Classe> ordemIntegracao = new ArrayList<>();
+    private static List<Classe> stubs = new ArrayList<>();
 
     public static List<Classe> getClasses() {
         return classes;
+    }
+
+    public static List<Classe> getOrdemIntegracao() {
+        return ordemIntegracao;
+    }
+
+    public static void addOrdemIntegracao(Classe integra) {
+        ordemIntegracao.add(integra);
+    }
+
+    public static List<Classe> getStubs() {
+        return stubs;
+    }
+
+    private static void addStub(Classe stub) {
+        stubs.add(stub);
     }
 
     public static Classe getClasseById(String id) {
@@ -30,12 +48,6 @@ public class Diagrama {
 
     public static void addLigacao(Ligacao ligacao) {
         Diagrama.ligacoes.add(ligacao);
-    }
-
-    public static void listaLigacoes() {
-        for (int i = 0; i < ligacoes.size(); i++) {
-            System.out.println("ID: " + ligacoes.get(i).getId() + " | Classe Origem: " + ligacoes.get(i).getClasseOrigem().getNome() + "| Classe Destino: " + ligacoes.get(i).getClasseDestino().getNome() + " | Cardinalidade Origem: " + ligacoes.get(i).getCardinalidadeOrigem() + " | Cardinalidade Destino: " + ligacoes.get(i).getCardinalidadeDestino() + " | Tipo: " + ligacoes.get(i).getTipo());
-        }
     }
 
     public static List<Ligacao> getLigacoes() {
@@ -59,26 +71,36 @@ public class Diagrama {
 
     public static void calculaFiFit1() {
         //FI
+        Classe origem;
+        Classe destino;
         for (int i = 0; i < ligacoes.size(); i++) {
+            origem = ligacoes.get(i).getClasseOrigem();
+            destino = ligacoes.get(i).getClasseDestino();
             if (null != ligacoes.get(i).getCardinalidadeOrigem()) {
                 switch (ligacoes.get(i).getCardinalidadeOrigem()) {
                     case Um:
-                        ligacoes.get(i).getClasseOrigem().somaFi();
+                        origem.somaFi();
+                        origem.addLiberaQuem(destino);
                         break;
                     case UmMuitos:
-                        ligacoes.get(i).getClasseOrigem().somaFi();
+                        origem.somaFi();
+                        origem.addLiberaQuem(destino);
                         break;
                     case Muitos:
-                        ligacoes.get(i).getClasseOrigem().somaFi();
+                        origem.somaFi();
+                        origem.addLiberaQuem(destino);
                         break;
                     case GeneralizationOrigem:
-                        ligacoes.get(i).getClasseDestino().somaFi();
+                        destino.somaFi();
+                        destino.addLiberaQuem(origem);
                         break;
                     case AggregationOrigem:
-                        ligacoes.get(i).getClasseOrigem().somaFi();
+                        origem.somaFi();
+                        origem.addLiberaQuem(destino);
                         break;
                     case DependencyOrigem:
-                        ligacoes.get(i).getClasseDestino().somaFi();
+                        destino.somaFi();
+                        destino.addLiberaQuem(origem);
                         break;
                     default:
                         break;
@@ -88,38 +110,43 @@ public class Diagrama {
             if (null != ligacoes.get(i).getCardinalidadeDestino()) {
                 switch (ligacoes.get(i).getCardinalidadeDestino()) {
                     case Um:
-                        ligacoes.get(i).getClasseDestino().somaFi();
+                        destino.somaFi();
+                        destino.addLiberaQuem(origem);
                         break;
                     case UmMuitos:
-                        ligacoes.get(i).getClasseDestino().somaFi();
+                        destino.somaFi();
+                        destino.addLiberaQuem(origem);
                         break;
                     case Muitos:
-                        ligacoes.get(i).getClasseDestino().somaFi();
+                        destino.somaFi();
+                        destino.addLiberaQuem(origem);
                         break;
                 }
             }
         }
         //FIT
         for (int i = 0; i < ligacoes.size(); i++) {
+            origem = ligacoes.get(i).getClasseOrigem();
+            destino = ligacoes.get(i).getClasseDestino();
             if (null != ligacoes.get(i).getCardinalidadeDestino()) {
                 switch (ligacoes.get(i).getCardinalidadeDestino()) {
                     case Um:
-                        ligacoes.get(i).getClasseOrigem().somaFit(ligacoes.get(i).getClasseDestino().getFi());
+                        origem.somaFit(destino.getFi());
                         break;
                     case UmMuitos:
-                        ligacoes.get(i).getClasseOrigem().somaFit(ligacoes.get(i).getClasseDestino().getFi());
+                        origem.somaFit(destino.getFi());
                         break;
                     case Muitos:
-                        ligacoes.get(i).getClasseOrigem().somaFit(ligacoes.get(i).getClasseDestino().getFi());
+                        origem.somaFit(destino.getFi());
                         break;
                     case GeneralizationDestino:
-                        ligacoes.get(i).getClasseOrigem().somaFit(ligacoes.get(i).getClasseDestino().getFi());
+                        origem.somaFit(destino.getFi());
                         break;
                     case AggregationDestino:
-                        ligacoes.get(i).getClasseDestino().somaFit(ligacoes.get(i).getClasseOrigem().getFi());
+                        destino.somaFit(origem.getFi());
                         break;
                     case DependencyDestino:
-                        ligacoes.get(i).getClasseOrigem().somaFit(ligacoes.get(i).getClasseDestino().getFi());
+                        origem.somaFit(destino.getFi());
                         break;
                     default:
                         break;
@@ -129,13 +156,13 @@ public class Diagrama {
             if (null != ligacoes.get(i).getCardinalidadeOrigem()) {
                 switch (ligacoes.get(i).getCardinalidadeOrigem()) {
                     case Um:
-                        ligacoes.get(i).getClasseDestino().somaFit(ligacoes.get(i).getClasseOrigem().getFi());
+                        destino.somaFit(origem.getFi());
                         break;
                     case UmMuitos:
-                        ligacoes.get(i).getClasseDestino().somaFit(ligacoes.get(i).getClasseOrigem().getFi());
+                        destino.somaFit(origem.getFi());
                         break;
                     case Muitos:
-                        ligacoes.get(i).getClasseDestino().somaFit(ligacoes.get(i).getClasseOrigem().getFi());
+                        destino.somaFit(origem.getFi());
                         break;
                     default:
                         break;
@@ -144,4 +171,55 @@ public class Diagrama {
         }
     }
 
+    public static void integraClasses() {
+        Classe atual;
+        Classe libera;
+        if (existeFitZero()) {
+            for (int i = 0; i < classes.size(); i++) {
+                atual = classes.get(i);
+                if (atual.getFit() == 0 && atual.getFit() != 99) {
+                    atual.setFit(99);
+                    addOrdemIntegracao(atual);
+                    for (int j = 0; j < atual.getLiberaQuem().size(); j++) {
+                        libera = atual.getLiberaQuem().get(j);
+                        libera.setFit(libera.getFit() - atual.getFi());
+                    }
+                    break;
+                }
+            }
+        } else {
+            criaStub();
+        }
+    }
+
+    public static boolean existeFitZero() {
+        for (int i = 0; i < classes.size(); i++) {
+            if (classes.get(i).getFit() == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static Classe getMenorFit() {
+        Classe menor = classes.get(0);
+        for (int i = 0; i < classes.size(); i++) {
+            if (classes.get(i).getFit() < menor.getFit()) {
+                menor = classes.get(i);
+            }
+        }
+        return menor;
+    }
+
+    public static void criaStub() {
+        Classe libera;
+        Classe stub = getMenorFit();
+        stub.setFit(99);
+        addOrdemIntegracao(stub);
+        addStub(stub);
+        for (int j = 0; j < stub.getLiberaQuem().size(); j++) {
+            libera = stub.getLiberaQuem().get(j);
+            libera.setFit(libera.getFit() - stub.getFi());
+        }
+    }
 }

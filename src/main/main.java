@@ -201,19 +201,17 @@ public class main extends javax.swing.JFrame {
 
             }
 
-            //lista todas ligações
-            Diagrama.listaLigacoes();
-
             //só pode ser feito uma única vez
             Diagrama.calculaFiFit1();
-
-            System.out.println("===========================================================================================================================================================================");
-            System.out.println("Número de classes : " + Diagrama.getClasses().size());
-            System.out.println("Número de relações : " + Diagrama.getLigacoes().size());
-            System.out.println("===========================================================================================================================================================================");
-
-            Diagrama.listaFiFit();
-
+            
+            //integra todas as classes
+            while (Diagrama.getOrdemIntegracao().size() < Diagrama.getClasses().size()) {
+                Diagrama.integraClasses();
+            }
+            
+            //lista ordem de integração
+            helper.listaOrdemIntegracao();
+            helper.listaStubs();
         } catch (Exception e) {
             e.printStackTrace();
         }
