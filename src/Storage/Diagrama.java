@@ -57,7 +57,7 @@ public class Diagrama {
         this.nome = nome;
     }
 
-    public static void calculaFiFit() {
+    public static void calculaFiFit1() {
         //FI
         for (int i = 0; i < ligacoes.size(); i++) {
             if (null != ligacoes.get(i).getCardinalidadeOrigem()) {
@@ -74,8 +74,11 @@ public class Diagrama {
                     case GeneralizationOrigem:
                         ligacoes.get(i).getClasseDestino().somaFi();
                         break;
-                    case AgregacaoOrigem:
+                    case AggregationOrigem:
                         ligacoes.get(i).getClasseOrigem().somaFi();
+                        break;
+                    case DependencyOrigem:
+                        ligacoes.get(i).getClasseDestino().somaFi();
                         break;
                     default:
                         break;
@@ -112,8 +115,11 @@ public class Diagrama {
                     case GeneralizationDestino:
                         ligacoes.get(i).getClasseOrigem().somaFit(ligacoes.get(i).getClasseDestino().getFi());
                         break;
-                    case AgregacaoDestino:
+                    case AggregationDestino:
                         ligacoes.get(i).getClasseDestino().somaFit(ligacoes.get(i).getClasseOrigem().getFi());
+                        break;
+                    case DependencyDestino:
+                        ligacoes.get(i).getClasseOrigem().somaFit(ligacoes.get(i).getClasseDestino().getFi());
                         break;
                     default:
                         break;

@@ -67,7 +67,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="jbAbrirXmi">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Abrir XMI Gerado pela extension XMI 0.9.2 do StarUML"/>
+        <Property name="text" type="java.lang.String" value="Abrir XMI Gerado pela extension XMI 0.9.2 do StarUML v2.8.0"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbAbrirXmiActionPerformed"/>

@@ -54,7 +54,7 @@ public class main extends javax.swing.JFrame {
 
         jlCreditos.setText("Desenvolvido por Lucas Lagrimante e Leonardo Smoginski");
 
-        jbAbrirXmi.setText("Abrir XMI Gerado pela extension XMI 0.9.2 do StarUML");
+        jbAbrirXmi.setText("Abrir XMI Gerado pela extension XMI 0.9.2 do StarUML v2.8.0");
         jbAbrirXmi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbAbrirXmiActionPerformed(evt);
@@ -138,11 +138,11 @@ public class main extends javax.swing.JFrame {
                                             if (ownerEndElement.getAttribute("aggregation").equals("shared")) {
                                                 ligacao.setTipo(TipoLigacao.Aggregation);
                                                 ligacao.setClasseOrigem(Diagrama.getClasseById(ownerEndElement.getAttribute("type")));
-                                                ligacao.setCardinalidadeOrigem(TipoCardinalidade.AgregacaoOrigem);
+                                                ligacao.setCardinalidadeOrigem(TipoCardinalidade.AggregationOrigem);
                                                 Node cardNodeDestino = ownedEndS.item(3);
                                                 Element ownerEndElementDestino = (Element) cardNodeDestino;
                                                 ligacao.setClasseDestino(Diagrama.getClasseById(ownerEndElementDestino.getAttribute("type")));
-                                                ligacao.setCardinalidadeDestino(TipoCardinalidade.AgregacaoDestino);
+                                                ligacao.setCardinalidadeDestino(TipoCardinalidade.AggregationDestino);
                                                 count2 = count2 + 2;
                                             } else {
                                                 if (count2 == 1) {
@@ -192,7 +192,8 @@ public class main extends javax.swing.JFrame {
                                 Ligacao ligacao = new Ligacao(relacaoElement.getAttribute("xmi:id"), Diagrama.getClasseById(relacaoElement.getAttribute("specific")), Diagrama.getClasseById(relacaoElement.getAttribute("general")), TipoCardinalidade.GeneralizationOrigem, TipoCardinalidade.GeneralizationDestino, TipoLigacao.Generalization);
                                 Diagrama.addLigacao(ligacao);
                             } else if (nodeRelacao.getNodeName().equals("ownedMember") && relacaoElement.getAttribute("xmi:type").equals(TipoLigacao.Dependency.getTipoLigacao())) {
-                                //relacoes de dependencia aqui
+                                Ligacao ligacao = new Ligacao(relacaoElement.getAttribute("xmi:id"), Diagrama.getClasseById(relacaoElement.getAttribute("client")), Diagrama.getClasseById(relacaoElement.getAttribute("supplier")), TipoCardinalidade.DependencyOrigem, TipoCardinalidade.DependencyDestino, TipoLigacao.Dependency);
+                                Diagrama.addLigacao(ligacao);
                             }
                         }
                     }
@@ -204,7 +205,7 @@ public class main extends javax.swing.JFrame {
             Diagrama.listaLigacoes();
 
             //só pode ser feito uma única vez
-            Diagrama.calculaFiFit();
+            Diagrama.calculaFiFit1();
 
             System.out.println("===========================================================================================================================================================================");
             System.out.println("Número de classes : " + Diagrama.getClasses().size());

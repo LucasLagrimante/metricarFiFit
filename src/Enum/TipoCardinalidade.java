@@ -8,8 +8,10 @@ public enum TipoCardinalidade {
     Muitos("*..*"),
     GeneralizationOrigem("->"),
     GeneralizationDestino("<-"),
-    AgregacaoOrigem("-<"),
-    AgregacaoDestino(">-");
+    DependencyOrigem("--> "),
+    DependencyDestino("<--"),
+    AggregationOrigem("-<"),
+    AggregationDestino(">-");
 
     private final String tipo;
 
