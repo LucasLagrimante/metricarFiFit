@@ -4,41 +4,36 @@ import model.Classe;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import Enum.TipoCardinalidade;
 
 public class Helper {
 
-    String lower, upper;
-    int count;
-    TipoCardinalidade tipoCardinalidade;
+    String lower;
+    String upper;
+    int count, count1, count2;
 
     public NodeList getFilhos(Node pai) {
-        if (pai.getNodeType() == Node.ELEMENT_NODE) {
-            if (pai.hasChildNodes()) {
-                return pai.getChildNodes();
-            }
-        }
-        return null;
+        return pai.getChildNodes();
     }
 
     public void memorizaClasses(NodeList listaClasses) {
         for (count = 1; count < listaClasses.getLength(); count++) {
             Node nodeClasse = listaClasses.item(count);
             if (nodeClasse.getNodeType() == Node.ELEMENT_NODE) {
+
                 Element paiElement = (Element) nodeClasse;
                 Classe classe = new Classe(paiElement.getAttribute("xmi:id"), paiElement.getAttribute("name"));
                 Diagrama.addClasse(classe);
+
             }
         }
     }
 
-    public int calculaFiAssociation(Element ownedMember, String id) {
-        int fi = 0;
+    public void adicionaDependencias(Element ownedMember, String id) {
         NodeList ownedEnds = this.getFilhos(ownedMember);
 
-        for (count = 0; count < ownedEnds.getLength(); count++) {
+        for (count1 = 0; count1 < ownedEnds.getLength(); count1++) {
             //ownedEnd
-            Node classe = ownedEnds.item(count);
+            Node classe = ownedEnds.item(count1);
 
             if (classe.getNodeType() == Node.ELEMENT_NODE) {
                 Element classElement = (Element) classe;
@@ -46,9 +41,9 @@ public class Helper {
                 // Se ownedEnd for a classe atual
                 if (classElement.getNodeName().equals("ownedEnd") && classElement.getAttribute("type").equals(id)) {
                     NodeList cardinalidades = this.getFilhos(classe);
-                    for (count = 0; count < cardinalidades.getLength(); count++) {
+                    for (count2 = 0; count2 < cardinalidades.getLength(); count2++) {
                         // Lower/Upper
-                        Node cardinalidade = cardinalidades.item(count);
+                        Node cardinalidade = cardinalidades.item(count2);
                         if (cardinalidade.getNodeType() == Node.ELEMENT_NODE) {
                             Element cardinalElement = (Element) cardinalidade;
 
@@ -59,22 +54,21 @@ public class Helper {
                                 upper = cardinalElement.getAttribute("value");
                             }
 
-                            // Verifica se causa depência
-                            if (lower.equals("0") && upper.equals("1")) {
-
-                            }
-                            if (lower.equals("1") && upper.equals("1")) {
-                                fi++;
-                            }
-                            if (lower.equals("1") && upper.equals("*")) {
-                                fi++;
-                            }
                         }
+                    }
+                    // Verifica se causa depência
+                    if (lower.equals("0") && upper.equals("1")) {
+
+                    }
+                    if (lower.equals("1") && upper.equals("1")) {
+
+                    }
+                    if (lower.equals("1") && upper.equals("*")) {
+
                     }
                 }
             }
         }
-        return fi;
     }
 
     public void fiGeneralization() {

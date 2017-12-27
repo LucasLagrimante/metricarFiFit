@@ -5,7 +5,6 @@
  */
 package main;
 
-import Enum.TipoCardinalidade;
 import Enum.TipoLigacao;
 import Storage.Diagrama;
 import Storage.Helper;
@@ -19,7 +18,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import java.io.File;
 import model.Classe;
-import model.Ligacao;
 
 /**
  *
@@ -28,9 +26,9 @@ import model.Ligacao;
 public class main extends javax.swing.JFrame {
 
     Helper helper = new Helper();
-    String lower, upper;
-    TipoCardinalidade tipoCardinalidade;
-    int count;
+    String lower;
+    String upper;
+    int count, count1, count2, count3, count4;
 
     public main() {
         initComponents();
@@ -45,49 +43,60 @@ public class main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jbAbrir = new javax.swing.JButton();
         jlCreditos = new javax.swing.JLabel();
+        jbAbrirXmi = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
+        setResizable(false);
+        setType(java.awt.Window.Type.UTILITY);
 
-        jbAbrir.setText("Abrir Diagrama XML");
-        jbAbrir.addActionListener(new java.awt.event.ActionListener() {
+        jlCreditos.setText("Desenvolvido por Lucas Lagrimante e Leonardo Smoginski");
+
+        jbAbrirXmi.setText("Abrir XMI Gerado pela extension XMI 0.9.2 do StarUML");
+        jbAbrirXmi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbAbrirActionPerformed(evt);
+                jbAbrirXmiActionPerformed(evt);
             }
         });
 
-        jlCreditos.setText("Desenvolvido por Lucas Lagrimante e Leonardo Smoginski");
+        jLabel1.setText("Entregue ao Dr. Marco Antônio Araújo");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(89, Short.MAX_VALUE)
-                .addComponent(jlCreditos)
-                .addGap(68, 68, 68))
             .addGroup(layout.createSequentialGroup()
-                .addGap(153, 153, 153)
-                .addComponent(jbAbrir)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(69, 69, 69)
+                .addComponent(jbAbrirXmi, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(53, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jlCreditos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(jbAbrir)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 209, Short.MAX_VALUE)
-                .addComponent(jlCreditos))
+                .addContainerGap()
+                .addComponent(jbAbrirXmi, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jlCreditos))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAbrirActionPerformed
-
+    private void jbAbrirXmiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAbrirXmiActionPerformed
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Filtro .xml", "xml"));
+//        fileChooser.setFileFilter(new FileNameExtensionFilter("Filtro .xml", "xml"));
         fileChooser.setAcceptAllFileFilterUsed(false);
         fileChooser.showOpenDialog(this);
 
@@ -99,39 +108,100 @@ public class main extends javax.swing.JFrame {
             dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(xmlFileLer);
             doc.getDocumentElement().normalize();
-            NodeList listaClasses = doc.getElementsByTagName("packagedElement");
-            helper.memorizaClasses(listaClasses);
+            NodeList packagedElementS = doc.getElementsByTagName("packagedElement");
+            helper.memorizaClasses(packagedElementS);
 
-            for (count = 1; count < listaClasses.getLength(); count++) {
-                //packagedElement
-                Node nodeClasse = listaClasses.item(count);
-                Element paiElement = (Element) nodeClasse;
-                Classe pai = Diagrama.getClasseById(paiElement.getAttribute("xmi:id"));
-                NodeList relacionamentos = helper.getFilhos(paiElement);
+            for (count = 1; count < packagedElementS.getLength(); count++) {
+                Node nodePackagedElement = packagedElementS.item(count);
+                if (nodePackagedElement.getNodeType() == Node.ELEMENT_NODE) {
+                    Element packagedElementElement = (Element) nodePackagedElement;
 
-                for (count = 0; count < relacionamentos.getLength(); count++) {
-                    //ownedMember
-                    Node nodeRelacionamento = relacionamentos.item(count);
-                    if (nodeRelacionamento.getNodeType() == Node.ELEMENT_NODE) {
-                        Element relacao = (Element) nodeRelacionamento;
-                        if (relacao.getAttribute("xmi:type").equals(TipoLigacao.Association.getTipoLigacao())) {
-                            pai.somaFi(helper.calculaFiAssociation(relacao, pai.getId()));
+                    //inicio fazer algo com as classes
+                    Classe pai = Diagrama.getClasseById(packagedElementElement.getAttribute("xmi:id"));
+                    //fim fazer algo com as classes
+
+                    //aqui pegou os filhos do packge, que são os ownedMember e os generalization
+                    NodeList relacoeS = helper.getFilhos(nodePackagedElement);
+
+                    for (count1 = 0; count1 < relacoeS.getLength(); count1++) {
+                        Node nodeRelacao = relacoeS.item(count1);
+                        if (nodeRelacao.getNodeType() == Node.ELEMENT_NODE) {
+                            Element relacaoElement = (Element) nodeRelacao;
+
+                            if (nodeRelacao.getNodeName().equals("ownedMember") && relacaoElement.getAttribute("xmi:type").equals(TipoLigacao.Association.getTipoLigacao())) {
+
+                                //pega filhos do ownedMember 
+                                NodeList ownedEndS = helper.getFilhos(nodeRelacao);
+
+                                for (count2 = 0; count2 < ownedEndS.getLength(); count2++) {
+                                    Node nodeOwnedEnd = ownedEndS.item(count2);
+                                    if (nodeOwnedEnd.getNodeType() == Node.ELEMENT_NODE) {
+                                        Element ownerEndElement = (Element) nodeOwnedEnd;
+
+                                        // se o type for igual ao do pai e se o lower value for igual a 1 soma o fi
+                                        //pegando a ponta dele
+                                        if (ownerEndElement.getAttribute("type").equals(pai.getId())) {
+                                            if (ownerEndElement.getAttribute("aggregation").equals("shared")) {
+                                                pai.somaFi(1);
+
+                                            } else {
+                                                //pega filhos do ownerEnd para ver se tem lower value igual a 1
+                                                NodeList cardinalidades = helper.getFilhos(nodeOwnedEnd);
+
+                                                for (count3 = 0; count3 < cardinalidades.getLength(); count3++) {
+                                                    Node cardinalidade = cardinalidades.item(count3);
+                                                    if (cardinalidade.getNodeType() == Node.ELEMENT_NODE) {
+                                                        Element cardinalidadeElement = (Element) cardinalidade;
+
+                                                        if (cardinalidade.getNodeName().equals("lowerValue")) {
+                                                            if (cardinalidadeElement.getAttribute("value").equals("1")) {
+                                                                pai.somaFi(1);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            //ponta nao é dele, então é o unico registro de fi da classe daqui pra frente verificar o FI dela e somar
+                                        } else {
+                                            NodeList cardinalidades = helper.getFilhos(nodeOwnedEnd);
+
+                                            for (count4 = 0; count4 < cardinalidades.getLength(); count4++) {
+                                                Node cardinalidade = cardinalidades.item(count4);
+                                                if (cardinalidade.getNodeType() == Node.ELEMENT_NODE) {
+                                                    Element cardinalidadeElement = (Element) cardinalidade;
+
+                                                    if (cardinalidade.getNodeName().equals("lowerValue")) {
+                                                        if (cardinalidadeElement.getAttribute("value").equals("1")) {
+                                                            Diagrama.getClasseById(ownerEndElement.getAttribute("type")).somaFi(1);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            } else if (nodeRelacao.getNodeName().equals("generalization") && relacaoElement.getAttribute("xmi:type").equals(TipoLigacao.Generalization.getTipoLigacao())) {
+                                Diagrama.getClasseById(relacaoElement.getAttribute("general")).somaFi(1);
+                            } else if (nodeRelacao.getNodeName().equals("ownedMember") && relacaoElement.getAttribute("xmi:type").equals(TipoLigacao.Dependency.getTipoLigacao())) {
+
+                            }
                         }
-
-//                        else if (elementoEnvolvido.getNodeName().equals(TipoLigacao.Generalization.getTipoLigacao())) {
-//                            Ligacao ligacao = new Ligacao(filhoElement.getAttribute("xmi:id"), Diagrama.getClasseById(filhoElement.getAttribute("specific")), Diagrama.getClassePorId(filhoElement.getAttribute("general")), TipoLigacao.Generalization);
-//                            Diagrama.addLigacao(ligacao);
-//                        }
                     }
                 }
-                System.out.println(pai.getNome() + ": " + pai.getFi());
+
             }
+
+            //imprimindo todas as classes depois de fazer todo calculo de FI e FIT
+            for (count = 0; count < Diagrama.getClasses().size(); count++) {
+                System.out.println(Diagrama.getClasses().get(count).getNome() + ": FI:" + Diagrama.getClasses().get(count).getFi()
+                        + " - FIT:" + Diagrama.getClasses().get(count).getFit()
+                );
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-    }//GEN-LAST:event_jbAbrirActionPerformed
+    }//GEN-LAST:event_jbAbrirXmiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -169,7 +239,8 @@ public class main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jbAbrir;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jbAbrirXmi;
     private javax.swing.JLabel jlCreditos;
     // End of variables declaration//GEN-END:variables
 }

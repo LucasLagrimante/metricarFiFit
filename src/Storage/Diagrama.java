@@ -4,15 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Classe;
 import model.Ligacao;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 public class Diagrama {
 
     private static String nome;
-    private static List<Classe> classes = new ArrayList<Classe>();
-    private static List<Ligacao> ligacoes = new ArrayList<Ligacao>();
+    private static List<Classe> classes = new ArrayList<>();
+    private static List<Ligacao> ligacoes = new ArrayList<>();
 
     public static List<Classe> getClasses() {
         return classes;
