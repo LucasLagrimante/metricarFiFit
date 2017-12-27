@@ -26,8 +26,8 @@ public class Classe {
         this.fi = fi;
     }
 
-    public void somaFi(int valor) {
-        this.setFi(this.fi + valor);
+    public void somaFi() {
+        this.setFi(this.fi + 1);
     }
 
     public int getFit() {

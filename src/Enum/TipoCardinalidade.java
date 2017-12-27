@@ -1,15 +1,15 @@
 package Enum;
 
 public enum TipoCardinalidade {
-    ZEROUM("0..1"),
-    UM("1..1"),
-    ZEROMUITOS("0..*"),
-    UMMUITOS("1..*"),
-    MUITOS("*..*"),
-    HERANCAORIGEM("->"),
-    HERANCADESTINO("<-"),
-    AGREGACAOORIGEM("-<"),
-    AGREGACAODESTINO(">-");
+    ZeroUm("0..1"),
+    Um("1..1"),
+    ZeroMuitos("0..*"),
+    UmMuitos("1..*"),
+    Muitos("*..*"),
+    GeneralizationOrigem("->"),
+    GeneralizationDestino("<-"),
+    AgregacaoOrigem("-<"),
+    AgregacaoDestino(">-");
 
     private final String tipo;
 

@@ -5,11 +5,11 @@
  */
 package main;
 
+import Enum.TipoCardinalidade;
 import Enum.TipoLigacao;
 import Storage.Diagrama;
 import Storage.Helper;
 import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
@@ -18,6 +18,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import java.io.File;
 import model.Classe;
+import model.Ligacao;
 
 /**
  *
@@ -116,10 +117,6 @@ public class main extends javax.swing.JFrame {
                 if (nodePackagedElement.getNodeType() == Node.ELEMENT_NODE) {
                     Element packagedElementElement = (Element) nodePackagedElement;
 
-                    //inicio fazer algo com as classes
-                    Classe pai = Diagrama.getClasseById(packagedElementElement.getAttribute("xmi:id"));
-                    //fim fazer algo com as classes
-
                     //aqui pegou os filhos do packge, que são os ownedMember e os generalization
                     NodeList relacoeS = helper.getFilhos(nodePackagedElement);
 
@@ -129,63 +126,74 @@ public class main extends javax.swing.JFrame {
                             Element relacaoElement = (Element) nodeRelacao;
 
                             if (nodeRelacao.getNodeName().equals("ownedMember") && relacaoElement.getAttribute("xmi:type").equals(TipoLigacao.Association.getTipoLigacao())) {
+                                Ligacao ligacao = new Ligacao(relacaoElement.getAttribute("xmi:id"), TipoLigacao.Association);
 
                                 //pega filhos do ownedMember 
                                 NodeList ownedEndS = helper.getFilhos(nodeRelacao);
-
                                 for (count2 = 0; count2 < ownedEndS.getLength(); count2++) {
                                     Node nodeOwnedEnd = ownedEndS.item(count2);
                                     if (nodeOwnedEnd.getNodeType() == Node.ELEMENT_NODE) {
-                                        Element ownerEndElement = (Element) nodeOwnedEnd;
+                                        if (nodeOwnedEnd.getNodeName().equals("ownedEnd")) {
+                                            Element ownerEndElement = (Element) nodeOwnedEnd;
 
-                                        // se o type for igual ao do pai e se o lower value for igual a 1 soma o fi
-                                        //pegando a ponta dele
-                                        if (ownerEndElement.getAttribute("type").equals(pai.getId())) {
                                             if (ownerEndElement.getAttribute("aggregation").equals("shared")) {
-                                                pai.somaFi(1);
-
+                                                ligacao.setTipo(TipoLigacao.Aggregation);
+                                                ligacao.setClasseOrigem(Diagrama.getClasseById(ownerEndElement.getAttribute("type")));
+                                                ligacao.setCardinalidadeOrigem(TipoCardinalidade.AgregacaoOrigem);
+                                                Node cardNodeDestino = ownedEndS.item(3);
+                                                Element ownerEndElementDestino = (Element) cardNodeDestino;
+                                                ligacao.setClasseDestino(Diagrama.getClasseById(ownerEndElementDestino.getAttribute("type")));
+                                                ligacao.setCardinalidadeDestino(TipoCardinalidade.AgregacaoDestino);
+                                                count2 = count2 + 2;
                                             } else {
-                                                //pega filhos do ownerEnd para ver se tem lower value igual a 1
-                                                NodeList cardinalidades = helper.getFilhos(nodeOwnedEnd);
+                                                if (count2 == 1) {
+                                                    ligacao.setClasseOrigem(Diagrama.getClasseById(ownerEndElement.getAttribute("type")));
 
-                                                for (count3 = 0; count3 < cardinalidades.getLength(); count3++) {
-                                                    Node cardinalidade = cardinalidades.item(count3);
-                                                    if (cardinalidade.getNodeType() == Node.ELEMENT_NODE) {
-                                                        Element cardinalidadeElement = (Element) cardinalidade;
+                                                    NodeList cardinalidades = helper.getFilhos(nodeOwnedEnd);
+                                                    for (count4 = 0; count4 < cardinalidades.getLength(); count4++) {
+                                                        Node cardinalidade = cardinalidades.item(count4);
+                                                        if (cardinalidade.getNodeType() == Node.ELEMENT_NODE) {
+                                                            Element cardinalidadeElement = (Element) cardinalidade;
 
-                                                        if (cardinalidade.getNodeName().equals("lowerValue")) {
-                                                            if (cardinalidadeElement.getAttribute("value").equals("1")) {
-                                                                pai.somaFi(1);
+                                                            if (cardinalidade.getNodeName().equals("lowerValue")) {
+                                                                lower = cardinalidadeElement.getAttribute("value");
+                                                            } else if (cardinalidade.getNodeName().equals("upperValue")) {
+                                                                upper = cardinalidadeElement.getAttribute("value");
                                                             }
                                                         }
                                                     }
-                                                }
-                                            }
-                                            //ponta nao é dele, então é o unico registro de fi da classe daqui pra frente verificar o FI dela e somar
-                                        } else {
-                                            NodeList cardinalidades = helper.getFilhos(nodeOwnedEnd);
+                                                    ligacao.setCardinalidadeOrigem(helper.getTipoCardinalidade(lower, upper));
 
-                                            for (count4 = 0; count4 < cardinalidades.getLength(); count4++) {
-                                                Node cardinalidade = cardinalidades.item(count4);
-                                                if (cardinalidade.getNodeType() == Node.ELEMENT_NODE) {
-                                                    Element cardinalidadeElement = (Element) cardinalidade;
+                                                } else if (count2 == 3) {
+                                                    ligacao.setClasseDestino(Diagrama.getClasseById(ownerEndElement.getAttribute("type")));
 
-                                                    if (cardinalidade.getNodeName().equals("lowerValue")) {
-                                                        if (cardinalidadeElement.getAttribute("value").equals("1")) {
-                                                            Diagrama.getClasseById(ownerEndElement.getAttribute("type")).somaFi(1);
+                                                    NodeList cardinalidades = helper.getFilhos(nodeOwnedEnd);
+                                                    for (count4 = 0; count4 < cardinalidades.getLength(); count4++) {
+                                                        Node cardinalidade = cardinalidades.item(count4);
+                                                        if (cardinalidade.getNodeType() == Node.ELEMENT_NODE) {
+                                                            Element cardinalidadeElement = (Element) cardinalidade;
+
+                                                            if (cardinalidade.getNodeName().equals("lowerValue")) {
+                                                                lower = cardinalidadeElement.getAttribute("value");
+                                                            } else if (cardinalidade.getNodeName().equals("upperValue")) {
+                                                                upper = cardinalidadeElement.getAttribute("value");
+                                                            }
                                                         }
                                                     }
+                                                    ligacao.setCardinalidadeDestino(helper.getTipoCardinalidade(lower, upper));
+
                                                 }
                                             }
                                         }
                                     }
                                 }
+                                //adicionando ligacao
+                                Diagrama.addLigacao(ligacao);
                             } else if (nodeRelacao.getNodeName().equals("generalization") && relacaoElement.getAttribute("xmi:type").equals(TipoLigacao.Generalization.getTipoLigacao())) {
-                                Diagrama.getClasseById(relacaoElement.getAttribute("general")).somaFi(1);
-                                // diz que a classe origem é DEPENDENDE da classe destino
-                                Diagrama.getClasseById(relacaoElement.getAttribute("specific")).addDependeDe(Diagrama.getClasseById(relacaoElement.getAttribute("general")));
+                                Ligacao ligacao = new Ligacao(relacaoElement.getAttribute("xmi:id"), Diagrama.getClasseById(relacaoElement.getAttribute("specific")), Diagrama.getClasseById(relacaoElement.getAttribute("general")), TipoCardinalidade.GeneralizationOrigem, TipoCardinalidade.GeneralizationDestino, TipoLigacao.Generalization);
+                                Diagrama.addLigacao(ligacao);
                             } else if (nodeRelacao.getNodeName().equals("ownedMember") && relacaoElement.getAttribute("xmi:type").equals(TipoLigacao.Dependency.getTipoLigacao())) {
-
+                                //relacoes de dependencia aqui
                             }
                         }
                     }
@@ -193,13 +201,20 @@ public class main extends javax.swing.JFrame {
 
             }
 
+            //lista todas ligações
+            Diagrama.listaLigacoes();
+
             //só pode ser feito uma única vez
-            Diagrama.calculaFitDasClasses();
+            Diagrama.calculaFiFit();
+
+            System.out.println("===========================================================================================================================================================================");
+            System.out.println("Número de classes : " + Diagrama.getClasses().size());
+            System.out.println("Número de relações : " + Diagrama.getLigacoes().size());
+            System.out.println("===========================================================================================================================================================================");
 
             //imprimindo todas as classes depois de fazer todo calculo de FI e FIT
             for (count = 0; count < Diagrama.getClasses().size(); count++) {
-                System.out.println(Diagrama.getClasses().get(count).getNome() + ": FI:" + Diagrama.getClasses().get(count).getFi()
-                        + " - FIT:" + Diagrama.getClasses().get(count).getFit()
+                System.out.println(Diagrama.getClasses().get(count).getNome() + ": FI:" + Diagrama.getClasses().get(count).getFi() + " - FIT:" + Diagrama.getClasses().get(count).getFit()
                 );
             }
 
@@ -222,16 +237,24 @@ public class main extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(main.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(main.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(main.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(main.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
