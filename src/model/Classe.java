@@ -1,15 +1,11 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Classe {
 
     private String id;
     private String nome;
     private int fi;
     private int fit;
-    private List<Classe> dependeDe = new ArrayList<>();
 
     public Classe(String id, String nome) {
         this.fi = 0;
@@ -60,14 +56,6 @@ public class Classe {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public List<Classe> getDependeDe() {
-        return dependeDe;
-    }
-
-    public void addDependeDe(Classe dependeDe) {
-        this.dependeDe.add(dependeDe);
     }
 
 }

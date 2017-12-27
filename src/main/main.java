@@ -17,7 +17,6 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import java.io.File;
-import model.Classe;
 import model.Ligacao;
 
 /**
@@ -212,11 +211,7 @@ public class main extends javax.swing.JFrame {
             System.out.println("Número de relações : " + Diagrama.getLigacoes().size());
             System.out.println("===========================================================================================================================================================================");
 
-            //imprimindo todas as classes depois de fazer todo calculo de FI e FIT
-            for (count = 0; count < Diagrama.getClasses().size(); count++) {
-                System.out.println(Diagrama.getClasses().get(count).getNome() + ": FI:" + Diagrama.getClasses().get(count).getFi() + " - FIT:" + Diagrama.getClasses().get(count).getFit()
-                );
-            }
+            Diagrama.listaFiFit();
 
         } catch (Exception e) {
             e.printStackTrace();

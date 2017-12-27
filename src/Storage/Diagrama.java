@@ -42,6 +42,13 @@ public class Diagrama {
         return ligacoes;
     }
 
+    public static void listaFiFit() {
+        for (int i = 0; i < Diagrama.getClasses().size(); i++) {
+            System.out.println(Diagrama.getClasses().get(i).getNome() + ": FI: " + Diagrama.getClasses().get(i).getFi() + " - FIT: " + Diagrama.getClasses().get(i).getFit()
+            );
+        }
+    }
+
     public String getNome() {
         return nome;
     }
@@ -61,10 +68,30 @@ public class Diagrama {
                     case UmMuitos:
                         ligacoes.get(i).getClasseOrigem().somaFi();
                         break;
-                    case GeneralizationDestino:
+                    case Muitos:
+                        ligacoes.get(i).getClasseOrigem().somaFi();
+                        break;
+                    case GeneralizationOrigem:
+                        ligacoes.get(i).getClasseDestino().somaFi();
+                        break;
+                    case AgregacaoOrigem:
                         ligacoes.get(i).getClasseOrigem().somaFi();
                         break;
                     default:
+                        break;
+                }
+            }
+
+            if (null != ligacoes.get(i).getCardinalidadeDestino()) {
+                switch (ligacoes.get(i).getCardinalidadeDestino()) {
+                    case Um:
+                        ligacoes.get(i).getClasseDestino().somaFi();
+                        break;
+                    case UmMuitos:
+                        ligacoes.get(i).getClasseDestino().somaFi();
+                        break;
+                    case Muitos:
+                        ligacoes.get(i).getClasseDestino().somaFi();
                         break;
                 }
             }
@@ -74,13 +101,35 @@ public class Diagrama {
             if (null != ligacoes.get(i).getCardinalidadeDestino()) {
                 switch (ligacoes.get(i).getCardinalidadeDestino()) {
                     case Um:
-                        ligacoes.get(i).getClasseDestino().somaFit(ligacoes.get(i).getClasseDestino().getFi());
+                        ligacoes.get(i).getClasseOrigem().somaFit(ligacoes.get(i).getClasseDestino().getFi());
                         break;
                     case UmMuitos:
-                        ligacoes.get(i).getClasseDestino().somaFit(ligacoes.get(i).getClasseDestino().getFi());
+                        ligacoes.get(i).getClasseOrigem().somaFit(ligacoes.get(i).getClasseDestino().getFi());
                         break;
-                    case GeneralizationOrigem:
-                        ligacoes.get(i).getClasseDestino().somaFit(ligacoes.get(i).getClasseDestino().getFi());
+                    case Muitos:
+                        ligacoes.get(i).getClasseOrigem().somaFit(ligacoes.get(i).getClasseDestino().getFi());
+                        break;
+                    case GeneralizationDestino:
+                        ligacoes.get(i).getClasseOrigem().somaFit(ligacoes.get(i).getClasseDestino().getFi());
+                        break;
+                    case AgregacaoDestino:
+                        ligacoes.get(i).getClasseDestino().somaFit(ligacoes.get(i).getClasseOrigem().getFi());
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            if (null != ligacoes.get(i).getCardinalidadeOrigem()) {
+                switch (ligacoes.get(i).getCardinalidadeOrigem()) {
+                    case Um:
+                        ligacoes.get(i).getClasseDestino().somaFit(ligacoes.get(i).getClasseOrigem().getFi());
+                        break;
+                    case UmMuitos:
+                        ligacoes.get(i).getClasseDestino().somaFit(ligacoes.get(i).getClasseOrigem().getFi());
+                        break;
+                    case Muitos:
+                        ligacoes.get(i).getClasseDestino().somaFit(ligacoes.get(i).getClasseOrigem().getFi());
                         break;
                     default:
                         break;
