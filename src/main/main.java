@@ -98,6 +98,7 @@ public class main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbAbrirXmiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAbrirXmiActionPerformed
+        Diagrama.resetaDiagrama();
         JFileChooser fileChooser = new JFileChooser();
 //        fileChooser.setFileFilter(new FileNameExtensionFilter("Filtro .xml", "xml"));
         fileChooser.setAcceptAllFileFilterUsed(false);

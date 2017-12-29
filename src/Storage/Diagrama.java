@@ -222,4 +222,12 @@ public class Diagrama {
             libera.setFit(libera.getFit() - stub.getFi());
         }
     }
+
+    public static void resetaDiagrama() {
+        Diagrama.nome = "";
+        Diagrama.classes = new ArrayList<>();
+        Diagrama.ligacoes = new ArrayList<>();
+        Diagrama.ordemIntegracao = new ArrayList<>();
+        Diagrama.stubs = new ArrayList<>();
+    }
 }
