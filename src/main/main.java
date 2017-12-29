@@ -209,11 +209,8 @@ public class main extends javax.swing.JFrame {
 
             //só pode ser feito uma única vez
             Diagrama.calculaFiFit1();
-
-            //integra todas as classes
-            while (Diagrama.getOrdemIntegracao().size() < Diagrama.getClasses().size()) {
-                Diagrama.integraClasses();
-            }
+            //integrando classes
+            helper.integraClasses();
 
             //lista ordem de integração
             helper.listaOrdemIntegracao();

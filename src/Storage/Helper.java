@@ -72,4 +72,10 @@ public class Helper {
         }
     }
 
+    public void integraClasses() {
+        while (Diagrama.getOrdemIntegracao().size() < Diagrama.getClasses().size()) {
+            Diagrama.integraClasses();
+        }
+    }
+
 }
