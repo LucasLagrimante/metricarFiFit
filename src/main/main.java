@@ -204,6 +204,8 @@ public class main extends javax.swing.JFrame {
                 }
 
             }
+//            list fi e fit1
+//            Diagrama.listaFiFit();
 
             //só pode ser feito uma única vez
             Diagrama.calculaFiFit1();

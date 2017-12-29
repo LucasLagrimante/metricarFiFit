@@ -28,6 +28,7 @@ public class Helper {
 
             }
         }
+        Diagrama.ordenaAlfabeticamente();
     }
 
     public TipoCardinalidade getTipoCardinalidade(String lower, String upper) {
@@ -70,4 +71,5 @@ public class Helper {
             }
         }
     }
+
 }

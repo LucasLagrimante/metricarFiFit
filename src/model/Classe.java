@@ -1,9 +1,10 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Classe {
+public class Classe implements Comparable<Classe>, Serializable {
 
     private String id;
     private String nome;
@@ -68,6 +69,11 @@ public class Classe {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    @Override
+    public int compareTo(Classe o) {
+        return nome.compareTo(o.nome);
     }
 
 }

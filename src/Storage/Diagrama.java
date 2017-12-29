@@ -1,6 +1,7 @@
 package Storage;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import model.Classe;
 import model.Ligacao;
@@ -59,6 +60,10 @@ public class Diagrama {
             System.out.println(Diagrama.getClasses().get(i).getNome() + ": FI: " + Diagrama.getClasses().get(i).getFi() + " - FIT: " + Diagrama.getClasses().get(i).getFit()
             );
         }
+    }
+
+    static void ordenaAlfabeticamente() {
+        Collections.sort(classes);
     }
 
     public String getNome() {

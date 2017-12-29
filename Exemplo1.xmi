@@ -7,7 +7,7 @@
 			<packagedElement xmi:id="AAAAAAFgXHw8+vBUy2k=" name="B" visibility="public" isAbstract="false" isFinalSpecialization="false" isLeaf="false" xmi:type="uml:Class" isActive="false">
 				<generalization xmi:id="AAAAAAFgXHyoavD6qlA=" visibility="public" xmi:type="uml:Generalization" specific="AAAAAAFgXHw8+vBUy2k=" general="AAAAAAFgXHtSSvAocS0="/>
 			</packagedElement>
-			<packagedElement xmi:id="AAAAAAFgXHxCRvB9QOk=" name="M" visibility="public" isAbstract="false" isFinalSpecialization="false" isLeaf="false" xmi:type="uml:Class" isActive="false">
+			<packagedElement xmi:id="AAAAAAFgXHxCRvB9QOk=" name="D" visibility="public" isAbstract="false" isFinalSpecialization="false" isLeaf="false" xmi:type="uml:Class" isActive="false">
 				<ownedMember xmi:id="AAAAAAFgXHzfJPENWb4=" visibility="public" xmi:type="uml:Association" isDerived="false">
 					<ownedEnd xmi:id="AAAAAAFgXHzfJPEOy4Y=" visibility="public" isStatic="false" isLeaf="false" isReadOnly="false" isOrdered="false" isUnique="false" xmi:type="uml:Property" aggregation="composite" isDerived="false" isID="false" type="AAAAAAFgXHxCRvB9QOk=">
 						<lowerValue xmi:id="AAAAAAFgg1sYC+5N8Bs=" xmi:type="uml:LiteralInteger" value="0"/>
