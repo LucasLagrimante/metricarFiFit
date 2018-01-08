@@ -213,8 +213,11 @@ public class main extends javax.swing.JFrame {
             helper.integraClasses();
 
             //lista ordem de integração
+            System.out.println("*********************************");
             helper.listaOrdemIntegracao();
             helper.listaStubs();
+            System.out.println("*********************************");
+
         } catch (IOException | ParserConfigurationException | SAXException e) {
         }
     }//GEN-LAST:event_jbAbrirXmiActionPerformed

@@ -65,17 +65,28 @@ public class Helper {
 
     public void listaStubs() {
         if (Diagrama.getStubs().size() > 0) {
-            System.out.println("\nUtilizando stub para:");
+            System.out.println("\nStub utilizado para/em:");
             for (int i = 0; i < Diagrama.getStubs().size(); i++) {
                 System.out.println(Diagrama.getStubs().get(i).getNome());
             }
         }
     }
 
-    public void integraClasses() {
-        while (Diagrama.getOrdemIntegracao().size() < Diagrama.getClasses().size()) {
-            Diagrama.integraClasses();
+    public void imprimeFit(int fit) {
+        System.out.println("*********** FIT" + fit + " ***********");
+        for (Classe obj : Diagrama.getClasses()) {
+            System.out.println(obj.getNome() + " - " + obj.getFit());
         }
+    }
+
+    public void integraClasses() {
+        int i = 1;
+        while (Diagrama.getOrdemIntegracao().size() < Diagrama.getClasses().size()) {
+            this.imprimeFit(i);
+            Diagrama.integraClasses();
+            i++;
+        }
+        this.imprimeFit(i);
     }
 
 }

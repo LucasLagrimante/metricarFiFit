@@ -177,17 +177,13 @@ public class Diagrama {
     }
 
     public static void integraClasses() {
-        Classe atual;
-        Classe libera;
         if (existeFitZero()) {
             for (int i = 0; i < classes.size(); i++) {
-                atual = classes.get(i);
-                if (atual.getFit() == 0 && atual.getFit() != 99) {
-                    atual.setFit(99);
-                    addOrdemIntegracao(atual);
-                    for (int j = 0; j < atual.getLiberaQuem().size(); j++) {
-                        libera = atual.getLiberaQuem().get(j);
-                        libera.setFit(libera.getFit() - atual.getFi());
+                if (classes.get(i).getFit() == 0 && classes.get(i).getFit() != 999) {
+                    classes.get(i).setFit(999);
+                    addOrdemIntegracao(classes.get(i));
+                    for (int j = 0; j < classes.get(i).getLiberaQuem().size(); j++) {
+                        classes.get(i).getLiberaQuem().get(j).setFit(classes.get(i).getLiberaQuem().get(j).getFit() - classes.get(i).getFi());
                     }
                     break;
                 }
@@ -219,7 +215,7 @@ public class Diagrama {
     public static void criaStub() {
         Classe libera;
         Classe stub = getMenorFit();
-        stub.setFit(99);
+        stub.setFit(1000);
         addOrdemIntegracao(stub);
         addStub(stub);
         for (int j = 0; j < stub.getLiberaQuem().size(); j++) {
